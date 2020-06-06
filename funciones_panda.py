@@ -61,7 +61,7 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
     stats['FGA'] = df[ ( (df['actionType_x'].isin(['2pt','3pt'])) )].groupby('team_name', sort=True)['actionType_x'].count()
 
     stats['FG'] = df[ ( (df['actionType_x'].isin(['2pt','3pt'])) & (df['success'] == 1) )].groupby('team_name', sort=True)['actionType_x'].count()
-    opp['FG'] = df[((df['actionType_x'].isin(['2pt', '3pt'])) & (df['success'] == 1))].groupby('team_rival', sort=True)['actionType_x'].count()
+    stats['OppFG'] = df[((df['actionType_x'].isin(['2pt', '3pt'])) & (df['success'] == 1))].groupby('team_rival', sort=True)['actionType_x'].count()
 
     stats.fillna(0, inplace=True)  #por el boolean mask
     opp.fillna(0, inplace=True)
