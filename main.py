@@ -26,6 +26,7 @@ query = "select " + fields + " from playbyplay where team_name != '' order by id
 df = pbp(query)
 
 
+
 #pbp of selected match_ids
 #match_ids = ['1381246', '1541195', '1381247']
 #df_team = match_pbp(df, match_ids)
