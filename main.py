@@ -34,3 +34,4 @@ df = pbp(query)
 
 stats = stats_df(df)
 print(stats)
+
