@@ -44,6 +44,8 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
 
     team = df['team_name'].unique()  # numpy.array
     stats = pd.DataFrame({'TEAM': team}).set_index('TEAM')
+    opp = pd.DataFrame({'TEAM': team}).set_index('TEAM')
+
     stats['ORB'] = df[ ( (df['actionType_x'] == 'rebound') & (df['subType_x'] == 'offensive') )].groupby('team_name', sort = True)['actionType_x'].count()
     stats['DRB'] = df[ ( (df['actionType_x'] == 'rebound') & (df['subType_x'] == 'defensive') )].groupby('team_name',  sort = True)['actionType_x'].count()
     stats['OppDRB'] = df[ ( (df['actionType_x'] == 'rebound') & (df['subType_x'] == 'defensive') )].groupby('team_rival', sort = True)['actionType_x'].count()
@@ -57,9 +59,12 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
     stats['3PTA'] = df[ (df['actionType_x']== '3pt') ].groupby('team_name', sort=True)['actionType_x'].count()
     stats['3PT'] = df[((df['actionType_x'] == '3pt') & (df['success'] == 1))].groupby('team_name', sort=True)['actionType_x'].count()
     stats['FGA'] = df[ ( (df['actionType_x'].isin(['2pt','3pt'])) )].groupby('team_name', sort=True)['actionType_x'].count()
-    stats['FG'] = df[ ( (df['actionType_x'].isin(['2pt','3pt'])) & (df['success'] == 1) )].groupby('team_name', sort=True)['actionType_x'].count()
-    stats.fillna(0, inplace=True)  #por el boolean mask
 
+    stats['FG'] = df[ ( (df['actionType_x'].isin(['2pt','3pt'])) & (df['success'] == 1) )].groupby('team_name', sort=True)['actionType_x'].count()
+    opp['FG'] = df[((df['actionType_x'].isin(['2pt', '3pt'])) & (df['success'] == 1))].groupby('team_rival', sort=True)['actionType_x'].count()
+
+    stats.fillna(0, inplace=True)  #por el boolean mask
+    opp.fillna(0, inplace=True)
     # Attempted and Made Points
     #stats['PTSA'] = 3 * stats['3PTA'] + 2 * stats['2PTA'] + stats['FTA']
     stats['PTS'] = 3 * stats['3PT'] + 2 * stats['2PT'] + stats['FT']
@@ -77,7 +82,7 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
     # With eFG% we do obtain the best relative measurement for points per field goal attempt; simple by multiplying by two.
     # accounts for made three pointers (3PM). isolates a player’s (or team’s) shooting efficiency from the field.
     stats['eFG%'] = (stats['FG'] + 0.5 * stats['3PT']) / stats['FGA']
-
+    stats['OppeFG%'] = (opp['FG'] + 0.5 * opp['3PT']) / opp['FGA']
     # True Shooting Percentage
     # accounts for both three pointers and free throws.
     # Provides a measure of total efficiency in scoring attempts, takes into account field goals, 3-point field goals, and free throws.
