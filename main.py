@@ -23,7 +23,7 @@ fields = "Clave, id_match, gt, team_name, team_rival, player_x , actionNumber, a
 query = "select " + fields + " from playbyplay where team_name != '' order by id_match, actionNumber ASC;" #traigo df sin team vacío ordenado por match y actionNumber
 
 #pbp of all the matches in the DB
-df = pbp(query)
+pbp = pbp(query)
 
 
 
@@ -32,6 +32,6 @@ df = pbp(query)
 #df_team = match_pbp(df, match_ids)
 #stats = stats_df(df_team)
 
-stats = stats_df(df)
+stats = stats_df(pbp)
 print(stats)
 

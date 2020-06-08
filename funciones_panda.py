@@ -113,7 +113,7 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
 
     # True Shooting Percentage
     # accounts for both three pointers and free throws.
-    # Provides a measure of total efficiency in scoring attempts, takes into account field goals, 3-point field goals, and free throws.
+    # Provides a measure of total efficiency in scoring attempts, takes into account field goals, 3-point field goals and free throws.
     stats['TS%'] = (stats['PTS'] / 2) / (stats['FGA'] + 0.44 * stats['FTA'])
 
     ## REBOUNDINGS: ORBP, DRBP (offensive and Defensive Rebound Percentage)
@@ -121,9 +121,9 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
     stats['OREB%'] = stats['ORB'] / (stats['ORB'] + stats['OppDRB'])
 
     ## TURNOVER: Turnover Ratio
-    # Turnover percentage is an estimate of turnovers per 100 plays. ( play = FGA + 0.44 * FTA + TO )
-    stats['TOV%'] = 100 * stats['TO'] / (stats['FGA'] + 0.44 * stats['FTA'] + stats['TO'])
-    stats['OppTOV%'] = 100 * stats['OppTO'] / (stats['OppFGA'] + 0.44 * stats['OppFTA'] + stats['OppTO'])
+    # Turnover percentage is an estimate of turnovers per plays. ( play = FGA + 0.44 * FTA + TO ) La definición de la NBA incluye AST en denominador
+    stats['TOV%'] = stats['TO'] / (stats['FGA'] + 0.44 * stats['FTA'] + stats['TO'])
+    stats['OppTOV%'] = stats['OppTO'] / (stats['OppFGA'] + 0.44 * stats['OppFTA'] + stats['OppTO'])
 
     ## FREE THROWS:
     # Field Throw Attempt
@@ -174,15 +174,10 @@ def ftrate(df, team):    # (DR%)
     ftrate = df[df.index.isin([team])]['FTRate']
     return ftrate
 
-#def to(df):
-#    '''This function returns the ORB for a team in the given PBP df.'''
-#    team = df['team_name'].unique()  # numpy.array
-#  #  TURNOVER = pd.DataFrame({'TEAM': team}).set_index('TEAM')
-#  #  TURNOVER['TO'] = df[ ( (df['actionType_x'] == 'rebound') & (df['subType_x'] == 'offensive') )].groupby('team_name', sort = True)['actionType_x'].count()
-#
-#
+
 ##SOURCES
 #
 ###https://www.breakthroughbasketball.com/stats/definitions.html
 ##https://spatialjam.com/glossary
+
 
