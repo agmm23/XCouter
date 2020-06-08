@@ -16,23 +16,23 @@ def pbp(query):
 
 def match_pbp(df, match_ids):
     '''This function returns a DF with the PBP of the matches selected in the match_ids Series'''
-    df_team = df.where( df['id_match'].isin(match_ids) ).dropna(how='all')
-    return df_team
+    return df.where( df['id_match'].isin(match_ids) ).dropna(how='all')
+
 
 #print(match_pbp.__doc__)
 
 
 def matches(df, team):
     '''This function returns the id_matchs of a team in the given df'''
-    matches = df.where ( (df['team_name'] == team) | (df['team_rival'] == team) ).dropna(how='all')['id_match'].unique()
-    return matches
+    return df.where ( (df['team_name'] == team) | (df['team_rival'] == team) ).dropna(how='all')['id_match'].unique()
+
 
 #print(matches.__doc__)
 
 def all_matches(df):
     '''This function returns all the id_matchs of the df'''
-    matches = df['id_match'].unique()
-    return matches
+    return df['id_match'].unique()
+
 
 #print(all_matches.__doc__)
 
