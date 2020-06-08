@@ -138,41 +138,40 @@ print(stats_df.__doc__)
 
 def orb(df, team):
     '''This function returns the ORB for a team'''
-    orb = df[df.index.isin([team])]['ORB']
-    return orb
+    return df[df.index.isin([team])]['ORB']
+
 
 def drb(df, team):
     '''This function returns the DRB  for a team:'''
-    drb = df[df.index.isin([team])]['DRB']
-    return drb
+    return df[df.index.isin([team])]['DRB']
+
 
 def opp_orb(df, team):
     '''This function returns the Opponent ORB'''
-    opp_orb = df[df.index.isin([team])]['OppORB']
-    return opp_orb
+    return df[df.index.isin([team])]['OppORB']
+
 
 def opp_drb(df, team):
     '''This function returns the Opponent ORB'''
-    opp_drb = df[df.index.isin([team])]['OppDRB']
-    return opp_drb
+    return df[df.index.isin([team])]['OppDRB']
+
 
 def orebp(df, team):
     '''This function returns the ORB percentage (quality of a team’s ability to rebound) for a team:
     Number of offensive rebounds divided by the number of available rebounds after a missed field goal attempt'''
-    orp = df[df.index.isin([team])]['OREB%']
-    return orp
+    return df[df.index.isin([team])]['OREB%']
+
 
 def drebp(df, team):    # (DR%)
     '''This function returns the ORB percentage (OREB%)for a team:
     Number of defensive rebounds divided by the number of opponent’s field goal misses that are available for rebound'''
-    drp = df[df.index.isin([team])]['DREB%']
-    return drp
+    return df[df.index.isin([team])]['DREB%']
+
 
 def ftrate(df, team):    # (DR%)
     '''This function returns the FT Rate for a team:'''
+    return df[df.index.isin([team])]['FTRate']
 
-    ftrate = df[df.index.isin([team])]['FTRate']
-    return ftrate
 
 
 ##SOURCES
