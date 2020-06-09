@@ -8,7 +8,7 @@ import pandas as pd
 from funciones_panda import *
 
 desired_width = 320
-desired_columns = 25
+desired_columns = 30
 desired_rows = 15
 pd.set_option('display.width', desired_width)
 pd.set_option('display.max_columns', desired_columns)
@@ -32,6 +32,9 @@ pbp = pbp(query)
 #df_team = match_pbp(df, match_ids)
 #stats = stats_df(df_team)
 
-stats = stats_df(pbp)
+match_ids = ['1381241']  # https://www.fibalivestats.com/u/FUBB/1381241/index_en_AU.html
+df_team = match_pbp(pbp, match_ids)
+
+stats = stats_df(df_team)
 print(stats)
 

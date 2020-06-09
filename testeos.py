@@ -29,8 +29,8 @@ pbp = pbp(query)
 
 
 #match_ids = all_matches(df) # no aporta
-
-match_ids = [1381246] #AGUADA - SAYAGO
+''''
+match_ids = [1381246] #agu-say
 #match_ids = ['1381246', '1541195', '1381247']
 #match_ids = ['1381246', '1381247']
 
@@ -87,15 +87,17 @@ print('SAYAGO OppDRB', opp_drb(df_team, 'SAYAGO'))  #1
 print('SAYAGO ORP%', orebp(df_team, 'SAYAGO'))
 print('SAYAGO DRP%', drebp(df_team, 'SAYAGO'))
 
-
+'''
 #''' Verificar salidas de los Opp
 # '1381246', '1381247' AGUADA - SAYAGO / AGUADA - TROUVILLE 
 # '1541195' URUNDAY - DEFENSOR
 match_ids = ['1381246', '1381247', '1541195']
+match_ids = ['1381246', '1381247', '1541195']
+
+
+
 
 df_team = match_pbp(pbp, match_ids)
-
-match_ids = ['1381246', '1381247', '1541195']
 
 
 stats = stats_df(df_team)

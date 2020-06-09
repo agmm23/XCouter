@@ -37,7 +37,7 @@ def all_matches(df):
 #print(all_matches.__doc__)
 
 def stats_df(df):
-    '''This function returns the Offensive Rebounds (ORB), Defensive Rebounds (DRB), Opponent ORB (OppORB), Opponent DRB (OppDRB), Turnovers (TO), Opponent Turnovers (OppTO),
+    '''stats_df: This function returns the Assists (AST), Steals (STL), Blocks (BLK), Offensive Rebounds (ORB), Defensive Rebounds (DRB), Opponent ORB (OppORB), Opponent DRB (OppDRB), Turnovers (TO), Opponent Turnovers (OppTO),
 Free Throw Attempts (FTA), Free Throws Made (FT), 2 Point Shot Attempts (2PTA), 2 Point Shots Made (2PT), 3 Point Shot Attempts (3PTA), 3 Point Shots Made (3PT),
 Field Goal Attempted (FGA), Field Goals Made (FG), Total Points Scored (PTS), Percentage of Field Goals (FG%), Percentage of 2 Point Shots Made (2PT%),
 Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'''
@@ -45,6 +45,23 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
     team = df['team_name'].unique()  # numpy.array
     stats = pd.DataFrame({'TEAM': team}).set_index('TEAM')
     opp = pd.DataFrame({'TEAM': team}).set_index('TEAM')
+    # Estadísticas basicas
+    stats['AST'] = df[(df['actionType_x'] == 'assist')].groupby('team_name', sort=True)['actionType_x'].count()
+    stats['STL'] = df[(df['actionType_x'] == 'steal')].groupby('team_name', sort=True)['actionType_x'].count()
+    stats['BLK'] = df[(df['actionType_x'] == 'block')].groupby('team_name', sort=True)['actionType_x'].count()
+
+    stats['2PTA'] = df[(df['actionType_x'] == '2pt')].groupby('team_name', sort=True)['actionType_x'].count()
+    stats['2PT'] = df[((df['actionType_x'] == '2pt') & (df['success'] == 1))].groupby('team_name', sort=True)[
+        'actionType_x'].count()
+
+    stats['3PTA'] = df[(df['actionType_x'] == '3pt')].groupby('team_name', sort=True)['actionType_x'].count()
+    stats['3PT'] = df[((df['actionType_x'] == '3pt') & (df['success'] == 1))].groupby('team_name', sort=True)[
+        'actionType_x'].count()
+
+    stats['FTA'] = df[(df['actionType_x'] == 'freethrow')].groupby('team_name', sort=True)['actionType_x'].count()
+    stats['OppFTA'] = df[(df['actionType_x'] == 'freethrow')].groupby('team_rival', sort=True)['actionType_x'].count()
+    stats['FT'] = df[((df['actionType_x'] == 'freethrow') & (df['success'] == 1))].groupby('team_name', sort=True)[
+        'actionType_x'].count()
 
     stats['ORB'] = \
     df[((df['actionType_x'] == 'rebound') & (df['subType_x'] == 'offensive'))].groupby('team_name', sort=True)[
@@ -63,31 +80,19 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
     stats['TO'] = df[(df['actionType_x'] == 'turnover')].groupby('team_name', sort=True)['actionType_x'].count()
     stats['OppTO'] = df[(df['actionType_x'] == 'turnover')].groupby('team_rival', sort=True)['actionType_x'].count()
 
-    stats['FTA'] = df[(df['actionType_x'] == 'freethrow')].groupby('team_name', sort=True)['actionType_x'].count()
-    stats['OppFTA'] = df[(df['actionType_x'] == 'freethrow')].groupby('team_rival', sort=True)['actionType_x'].count()
-    stats['FT'] = df[((df['actionType_x'] == 'freethrow') & (df['success'] == 1))].groupby('team_name', sort=True)[
-        'actionType_x'].count()
-
-    stats['2PTA'] = df[(df['actionType_x'] == '2pt')].groupby('team_name', sort=True)['actionType_x'].count()
-    stats['2PT'] = df[((df['actionType_x'] == '2pt') & (df['success'] == 1))].groupby('team_name', sort=True)[
-        'actionType_x'].count()
-
-    stats['3PTA'] = df[(df['actionType_x'] == '3pt')].groupby('team_name', sort=True)['actionType_x'].count()
-    stats['3PT'] = df[((df['actionType_x'] == '3pt') & (df['success'] == 1))].groupby('team_name', sort=True)[
-        'actionType_x'].count()
     stats['Opp3PT'] = df[((df['actionType_x'] == '3pt') & (df['success'] == 1))].groupby('team_rival', sort=True)[
         'actionType_x'].count()
 
-    stats['FGA'] = df[((df['actionType_x'].isin(['2pt', '3pt'])))].groupby('team_name', sort=True)[
+    stats['FGA'] = df[(df['actionType_x'].isin(['2pt', '3pt']))].groupby('team_name', sort=True)[
         'actionType_x'].count()
-    stats['OppFGA'] = df[((df['actionType_x'].isin(['2pt', '3pt'])))].groupby('team_rival', sort=True)[
+    stats['OppFGA'] = df[(df['actionType_x'].isin(['2pt', '3pt']))].groupby('team_rival', sort=True)[
         'actionType_x'].count()
 
     stats['FG'] = \
-    df[((df['actionType_x'].isin(['2pt', '3pt'])) & (df['success'] == 1))].groupby('team_name', sort=True)[
+    df[(df['actionType_x'].isin(['2pt', '3pt']) & (df['success'] == 1))].groupby('team_name', sort=True)[
         'actionType_x'].count()
     stats['OppFG'] = \
-    df[((df['actionType_x'].isin(['2pt', '3pt'])) & (df['success'] == 1))].groupby('team_rival', sort=True)[
+    df[(df['actionType_x'].isin(['2pt', '3pt']) & (df['success'] == 1))].groupby('team_rival', sort=True)[
         'actionType_x'].count()
 
     stats.fillna(0, inplace=True)  # por el boolean mask
