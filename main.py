@@ -11,19 +11,29 @@ desired_width = 320
 desired_columns = 30
 desired_rows = 15
 pd.set_option('display.width', desired_width)
-pd.set_option('display.max_columns', desired_columns)
-pd.set_option('display.max_rows', desired_rows)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
 
 # Get the df with playbyplay ordered by match_id and actionNumber
 
-fields = "Clave, id_match, gt, team_name, team_rival, player_x , actionNumber, actionType_x ,  subType_x  , previousAction_x , " \
-         "`lead`,  s1, s2, scoring,  success, tno_x,  period,  perType,  shirtNumber_y,  pno_x , p, r, internationalFamilyName,  internationalFirstName, scoreboardName, shirtNumber_x, " \
+fields = "Clave, id_match, gt, team_name, team_rival, player_x AS player , actionNumber, actionType_x actionType,  subType_x as subType , previousAction_x , " \
+         "`lead`,  s1, s2, scoring,  success, tno_x AS tno,  period,  perType,  shirtNumber_y,  pno_x , p, r, internationalFamilyName,  internationalFirstName, scoreboardName, shirtNumber_x, " \
          "Player_1_Local, Player_2_Local, Player_3_Local, Player_4_Local, Player_5_Local, Player_1_Visitor, Player_2_Visitor, Player_3_Visitor, Player_4_Visitor, Player_5_Visitor, x, y"
 
 query = "select " + fields + " from playbyplay where team_name != '' order by id_match, actionNumber ASC;" #traigo df sin team vacío ordenado por match y actionNumber
 
 #pbp of all the matches in the DB
 pbp = pbp(query)
+
+#Agregar a la columna assistant quien fue el jugador que asistió en ese punto
+#Toma una fila con anotacion y evalua la fila anterior si es que tuvo una asistencia, y agrega el jugador a la colunmna assistant
+
+pbp['assistant'] = pbp['player'].shift().where( (pbp['tno'].shift() == pbp['tno'])
+                                                          & (pbp['actionType'].isin(['2pt','3pt','freethrow']))
+                                                             & (pbp['actionType'].shift() == 'assist')
+                                                             )
+
+
 
 
 
