@@ -9,7 +9,7 @@ from plotly.offline import init_notebook_mode, iplot
 
 import pandas as pd
 #from funciones import *
-from funciones_panda import *
+from team_stats import *
 
 desired_width = 320
 desired_columns = 25

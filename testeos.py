@@ -5,7 +5,7 @@ import sqlalchemy as db
 
 import pandas as pd
 #from funciones import *
-from funciones_panda import *
+from team_stats import *
 
 desired_width = 320
 desired_columns = 25
@@ -16,8 +16,8 @@ pd.set_option('display.max_rows', desired_rows)
 
 # Get the df with playbyplay ordered by match_id and actionNumber
 
-fields = "Clave, id_match, gt, team_name, team_rival, player_x , actionNumber, actionType_x ,  subType_x  , previousAction_x , " \
-         "`lead`,  s1, s2, scoring,  success, tno_x,  period,  perType,  shirtNumber_y,  pno_x , p, r, internationalFamilyName,  internationalFirstName, scoreboardName, shirtNumber_x, " \
+fields = "Clave, id_match, gt, team_name, team_rival, player_x AS player , actionNumber, actionType_x actionType,  subType_x AS subType , previousAction_x , " \
+         "`lead`,  s1, s2, scoring,  success, tno_x AS tno,  period,  perType,  shirtNumber_y,  pno_x , p, r, internationalFamilyName,  internationalFirstName, scoreboardName, shirtNumber_x, " \
          "Player_1_Local, Player_2_Local, Player_3_Local, Player_4_Local, Player_5_Local, Player_1_Visitor, Player_2_Visitor, Player_3_Visitor, Player_4_Visitor, Player_5_Visitor, x, y"
 
 query = "select " + fields + " from playbyplay where team_name != '' order by id_match, actionNumber ASC;" #traigo df sin team vacío ordenado por match y actionNumber

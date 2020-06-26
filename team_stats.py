@@ -1,48 +1,17 @@
 # IMPORTS
-import sqlalchemy as db
-import pandas as pd
+from match_functions import *
 
-### DB FUNCTIONS
-
-def pbp(query):
-    # Conectar a la DB
-    connect_string = 'mysql+mysqlconnector://root:monic.123@localhost:3306/scouter'
-    engine = db.create_engine(connect_string, connect_args={'auth_plugin': 'mysql_native_password'})
-    connection = engine.connect()
-    results = connection.execute(query).fetchall()
-    df = pd.DataFrame(results)
-    df.columns = results[0].keys()
-    return df
-
-def match_pbp(df, match_ids):
-    '''This function returns a DF with the PBP of the matches selected in the match_ids Series'''
-    return df.where( df['id_match'].isin(match_ids) ).dropna(how='all')
-
-
-#print(match_pbp.__doc__)
-
-
-def matches(df, team):
-    '''This function returns the id_matchs of a team in the given df'''
-    return df.where ( (df['team_name'] == team) | (df['team_rival'] == team) ).dropna(how='all')['id_match'].unique()
-
-
-#print(matches.__doc__)
-
-def all_matches(df):
-    '''This function returns all the id_matchs of the df'''
-    return df['id_match'].unique()
-
-
-#print(all_matches.__doc__)
 
 def stats_df(df):
     '''stats_df: This function returns the Assists (AST), Steals (STL), Blocks (BLK), Offensive Rebounds (ORB), Defensive Rebounds (DRB), Opponent ORB (OppORB), Opponent DRB (OppDRB), Turnovers (TO), Opponent Turnovers (OppTO),
 Free Throw Attempts (FTA), Free Throws Made (FT), 2 Point Shot Attempts (2PTA), 2 Point Shots Made (2PT), 3 Point Shot Attempts (3PTA), 3 Point Shots Made (3PT),
 Field Goal Attempted (FGA), Field Goals Made (FG), Total Points Scored (PTS), Percentage of Field Goals (FG%), Percentage of 2 Point Shots Made (2PT%),
 Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'''
+    keep = (df['team_name'] != "")
+    df= df[keep].dropna(how='all')
 
     team = df['team_name'].unique()  # numpy.array
+    print(team)
     stats = pd.DataFrame({'TEAM': team}).set_index('TEAM')
     opp = pd.DataFrame({'TEAM': team}).set_index('TEAM')
     # Estadísticas basicas
@@ -137,7 +106,7 @@ Percentage of 3 Point Shots Made (3PT%)  for all the teams in the given PbP df.'
 
     return stats
 
-print(stats_df.__doc__)
+#print(stats_df.__doc__)
 
 
 
@@ -176,6 +145,8 @@ def drebp(df, team):    # (DR%)
 def ftrate(df, team):    # (DR%)
     '''This function returns the FT Rate for a team:'''
     return df[df.index.isin([team])]['FTRate']
+
+
 
 
 
