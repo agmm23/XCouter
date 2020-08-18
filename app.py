@@ -466,8 +466,8 @@ def calcular_Hexagonos_y_frecuenciaxJugador_Tirador(df_shots, player):
 # # Importar a un dataframe los datos para realizar pruebas
 # connect_string = 'mysql+mysqlconnector://root:password@localhost:3306/scouter'
 # sql_engine = sql.create_engine(connect_string)
-# query = "select * from playbyplay"
-# df = pd.read_sql_query(query, sql_engine)
+# pbp_query = "select * from playbyplay"
+# df = pd.read_sql_query(pbp_query, sql_engine)
 #
 # df['temporary'] = df.apply (lambda a: transform_coordinates(a['x'],a['y'],0,0,0,'left','bottom'), axis=1)
 # df['x_converted'] = df['temporary'].apply (lambda x: x[0])
@@ -497,7 +497,7 @@ df = table(query)
 ##connect_string = 'mysql+mysqlconnector://root:passwordd@localhost:3306/scouter'
 
 #sql_engine = sql.create_engine(connect_string)
-#df = pd.read_sql_query(query, sql_engine)
+#df = pd.read_sql_query(pbp_query, sql_engine)
 
 df_shots = df[['id_match', 'actionType_x', 'player_x', 'success', 'team_name', 'team_rival', 'x', 'y']]
 df_shots = df_shots[df_shots['actionType_x'].isin(['2pt', '3pt'])]

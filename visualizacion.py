@@ -25,8 +25,8 @@ fields = "Clave, id_match, gt, team_name, team_rival, player_x , actionNumber, a
 
 query = "select " + fields + " from playbyplay where team_name != '' order by id_match, actionNumber ASC;" #traigo df sin team vacío ordenado por match y actionNumber
 
-#pbp of all the matches in the DB
-df = pbp(query)
+#scouter of all the matches in the DB
+df = scouter(query)
 
 
 
