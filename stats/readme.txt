@@ -1,4 +1,4 @@
-ACRONISMOS:
+ACRONIMOS:
 ----------
 AST: assist
 STL: steal
