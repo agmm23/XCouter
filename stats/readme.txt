@@ -11,15 +11,21 @@ DRB: defensive rebound
 
 TO: turnover
 
-FG: field goal (2pts y 3pts)
-FGA%: percentage of FG made
+FG: field goal (2pts y 3pts) (algunos le llaman FGM)
+FGA%: percentage of FGA
 
 PTS: points made
 
+PPSA: points per shot attempt
+#is a player efficiency evaluation metric which is calculated by dividing the total points (2P made and 3P made) by the total field goals attempts.
+(total points of 2PTA + total points of 3PTA ) / FGA
+
 FOUR FACTORS:
 eFG: effective FG%
+# is a player and/or team evaluation metric that measures the effectiveness of 2-point shots and 3-point shots.
 # This measure is a scale corrected measure to identify field goal percentage for a team.
 # With eFG% we do obtain the best relative measurement for points per field goal attempt; simple by multiplying by two.    # accounts for made three pointers (3PM). isolates a player’s (or team’s) shooting efficiency from the field.
+eFG = (FG + 0.5*3PT) / FGA
 
 TS%: true shooting %
 # metric that factors a player’s or a team’s performance at the free-throw line and considers the efficiency on all types of shots.
